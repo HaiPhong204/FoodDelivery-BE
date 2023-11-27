@@ -5,6 +5,7 @@ using MyAPI.Models.Setting;
 using MyAPI.Extensions;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
+using MyApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,14 +33,19 @@ builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.ConfigureExceptionHandler(app.Logger);
+app.UseForwardedHeaders();
 app.UseHttpsRedirection();
+app.UseRouting();
+
+app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseMiddleware<JwtMiddleware>();
 app.UseAuthorization();
