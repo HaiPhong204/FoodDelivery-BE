@@ -12,7 +12,7 @@ namespace MyAPI.Cores.Repositories
             _context = context;
         }
 
-        public async Task<UserModel?> GetById(Guid id)
+        public async Task<UserModel?> GetById(string id)
         {
             return await _context.Users.FindAsync(id);
         }

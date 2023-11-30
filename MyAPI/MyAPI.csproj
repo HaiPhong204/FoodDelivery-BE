@@ -38,6 +38,9 @@
     <None Remove="Models\Setting\" />
     <None Remove="Extensions\" />
     <None Remove="DTOs\User\" />
+    <None Remove="DTOs\Food\" />
+    <None Remove="DTOs\Cart\" />
+    <None Remove="DTOs\Order\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -55,10 +58,25 @@
     <Folder Include="Models\Setting\" />
     <Folder Include="Extensions\" />
     <Folder Include="DTOs\User\" />
+    <Folder Include="DTOs\Food\" />
+    <Folder Include="DTOs\Cart\" />
+    <Folder Include="DTOs\Order\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Properties\launchSettings.json">
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Cores\IRepositories\IOrderRepository.cs">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Compile>
+    <Compile Update="Cores\Repositories\OrderRepository.cs">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -18,7 +18,7 @@ namespace MyAPI.Models
         public DateTime? UpdatedAt { get; set; }
         public string BuyerId { get; set; } = string.Empty;
         public ICollection<OrderDetailsModel>? OrderDetails { get; set; }
-        public UserModel? User { get; set; }
+        public UserModel? UserModel { get; set; }
 
         public OrderModel()
 		{

@@ -40,11 +40,9 @@ namespace MyAPI.Core.Repositories
             {
                 Subject = new ClaimsIdentity(new Claim[]
               {
-                        new Claim(ClaimTypes.Name, user.Name),
-                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                        new Claim("UserId", user.Id.ToString())
+                        new Claim("UserId", user.Id)
               }),
-                Expires = DateTime.UtcNow.AddDays(30),
+                Expires = DateTime.UtcNow.AddMonths(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);

@@ -5,7 +5,7 @@ namespace MyAPI.Cores.IRepositories
 {
 	public interface IUserRepository
 	{
-        Task<UserModel?> GetById(Guid id);
+        Task<UserModel?> GetById(string id);
     }
 }
 

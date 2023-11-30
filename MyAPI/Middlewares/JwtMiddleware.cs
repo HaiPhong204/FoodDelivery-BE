@@ -26,7 +26,7 @@ namespace MyAPI.Middlewares
                 if (userId != null)
                 {
                     // attach user to context on successful jwt validation
-                    var user = await userRepository.GetById(new Guid(userId));
+                    var user = await userRepository.GetById(userId);
                     context.Items["User"] = user;
                     if (user != null)
                     {

@@ -5,10 +5,13 @@ using MyAPI.Core.IRepositories;
 using MyAPI.Core.Repositories;
 using MyAPI.Cores.IRepositories;
 using MyAPI.Cores.Repositories;
+using MyAPI.Error;
 using MyAPI.Services;
 using MyAPI.Services.Mail;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Net.Mime;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace MyAPI.Extensions
 {
@@ -26,6 +29,9 @@ namespace MyAPI.Extensions
         public static void ConfigureRepository(this IServiceCollection services) =>
             services.AddScoped<IAuthRepository, AuthRepository>()
             .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IFoodRepository, FoodRepository>()
+            .AddScoped<ICartRepository,CartRepository>()
+            .AddScoped<IOrderRepository, OrderRepository>()
             .AddSingleton<IMailService, MailService>()
             .AddSingleton<IDictionary<string, string>>(_ => new Dictionary<string, string>());
         public static void ConfigureSwaggerOptions(this SwaggerGenOptions options)

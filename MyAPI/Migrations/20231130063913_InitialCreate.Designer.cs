@@ -12,7 +12,7 @@ using MyAPI.Models;
 namespace MyAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231127022205_InitialCreate")]
+    [Migration("20231130063913_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -103,7 +103,8 @@ namespace MyAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FoodId");
+                    b.HasIndex("FoodId")
+                        .IsUnique();
 
                     b.HasIndex("OrderId");
 
@@ -117,7 +118,7 @@ namespace MyAPI.Migrations
 
                     b.Property<string>("BuyerId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(36)");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -139,12 +140,9 @@ namespace MyAPI.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(36)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("BuyerId");
 
                     b.ToTable("Order");
                 });
@@ -192,48 +190,52 @@ namespace MyAPI.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("MyAPI.Models.FoodModel", "Food")
-                        .WithOne("Cart")
+                    b.HasOne("MyAPI.Models.FoodModel", "FoodModel")
+                        .WithOne("CartModel")
                         .HasForeignKey("MyAPI.Models.CartModel", "FoodId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Food");
+                    b.Navigation("FoodModel");
 
                     b.Navigation("UserModel");
                 });
 
             modelBuilder.Entity("MyAPI.Models.OrderDetailsModel", b =>
                 {
-                    b.HasOne("MyAPI.Models.FoodModel", "Food")
-                        .WithMany()
-                        .HasForeignKey("FoodId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("MyAPI.Models.FoodModel", "FoodModel")
+                        .WithOne("OrderDetailsModel")
+                        .HasForeignKey("MyAPI.Models.OrderDetailsModel", "FoodId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("MyAPI.Models.OrderModel", "Order")
+                    b.HasOne("MyAPI.Models.OrderModel", "OrderModel")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Food");
+                    b.Navigation("FoodModel");
 
-                    b.Navigation("Order");
+                    b.Navigation("OrderModel");
                 });
 
             modelBuilder.Entity("MyAPI.Models.OrderModel", b =>
                 {
-                    b.HasOne("MyAPI.Models.UserModel", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                    b.HasOne("MyAPI.Models.UserModel", "UserModel")
+                        .WithMany("Orders")
+                        .HasForeignKey("BuyerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("UserModel");
                 });
 
             modelBuilder.Entity("MyAPI.Models.FoodModel", b =>
                 {
-                    b.Navigation("Cart");
+                    b.Navigation("CartModel");
+
+                    b.Navigation("OrderDetailsModel");
                 });
 
             modelBuilder.Entity("MyAPI.Models.OrderModel", b =>
@@ -244,6 +246,8 @@ namespace MyAPI.Migrations
             modelBuilder.Entity("MyAPI.Models.UserModel", b =>
                 {
                     b.Navigation("Carts");
+
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

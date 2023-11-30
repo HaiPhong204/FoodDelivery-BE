@@ -62,7 +62,7 @@ namespace MyAPI.Migrations
                         column: x => x.FoodId,
                         principalTable: "Food",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Cart_User_BuyerId",
                         column: x => x.BuyerId,
@@ -82,17 +82,17 @@ namespace MyAPI.Migrations
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    BuyerId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<string>(type: "varchar(36)", nullable: true)
+                    BuyerId = table.Column<string>(type: "varchar(36)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Order", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Order_User_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Order_User_BuyerId",
+                        column: x => x.BuyerId,
                         principalTable: "User",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,7 +113,7 @@ namespace MyAPI.Migrations
                         column: x => x.FoodId,
                         principalTable: "Food",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_OrderDetail_Order_OrderId",
                         column: x => x.OrderId,
@@ -134,14 +134,15 @@ namespace MyAPI.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_UserId",
+                name: "IX_Order_BuyerId",
                 table: "Order",
-                column: "UserId");
+                column: "BuyerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetail_FoodId",
                 table: "OrderDetail",
-                column: "FoodId");
+                column: "FoodId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetail_OrderId",

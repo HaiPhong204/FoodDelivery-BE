@@ -14,8 +14,8 @@ namespace MyAPI.Models
         public int Count { get; set; }
         public double Price { get; set; }
         public string OrderId { get; set; } = string.Empty;
-        public FoodModel? Food { get; set; }
-        public OrderModel? Order { get; set; }
+        public FoodModel? FoodModel { get; set; }
+        public OrderModel? OrderModel { get; set; }
         public OrderDetailsModel()
 		{
             Id = Guid.NewGuid().ToString();

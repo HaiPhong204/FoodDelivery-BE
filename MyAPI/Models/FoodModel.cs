@@ -15,7 +15,8 @@ namespace MyAPI.Models
         public string Url { get; set; } = string.Empty;
         public int Quantity { get; set; }
         public double Price { get; set; }
-        public CartModel? Cart { get; set; }
+        public CartModel? CartModel { get; set; }
+        public OrderDetailsModel? OrderDetailsModel { get; set; }
 
         public FoodModel()
 		{

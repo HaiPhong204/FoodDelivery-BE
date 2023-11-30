@@ -14,7 +14,7 @@ namespace MyAPI.Models
         public int Count { get; set; }
         public double Price { get; set; }
         public string BuyerId { get; set; } = string.Empty;
-        public FoodModel? Food { get; set; }
+        public FoodModel? FoodModel { get; set; }
         public UserModel? UserModel { get; set; }
 
         public CartModel()

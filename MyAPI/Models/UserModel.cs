@@ -20,6 +20,7 @@ namespace MyAPI.Models
         public string Avatar { get; set; } = string.Empty;
         public bool IsVerified { get; set; }
         public ICollection<CartModel>? Carts { get; set; }
+        public ICollection<OrderModel>? Orders { get; set; }
 
         public UserModel()
 		{

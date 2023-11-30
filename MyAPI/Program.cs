@@ -6,6 +6,7 @@ using MyAPI.Extensions;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using MyApi.Extensions;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,12 @@ builder.Services.Configure<MailSetting>(builder.Configuration.GetSection("MailSe
 builder.Services.ConfigureAuthentication(builder.Configuration);
 builder.Services.ConfigureRepository();
 builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddControllers().AddJsonOptions(x =>
+{
+    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 
 var app = builder.Build();
 

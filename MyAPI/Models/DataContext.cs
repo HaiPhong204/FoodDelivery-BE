@@ -24,10 +24,25 @@ namespace MyAPI.Models
                 .WithMany(p => p.Carts)
                 .HasForeignKey(p => p.BuyerId)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<CartModel>()
+                .HasOne(b => b.FoodModel)
+                .WithOne(p => p.CartModel)
+                .HasForeignKey<CartModel>(p => p.FoodId)
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<OrderDetailsModel>()
-                .HasOne(b => b.Order)
+                .HasOne(b => b.OrderModel)
                 .WithMany(p => p.OrderDetails)
                 .HasForeignKey(p => p.OrderId)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<OrderDetailsModel>()
+                .HasOne(b => b.FoodModel)
+                .WithOne(p => p.OrderDetailsModel)
+                .HasForeignKey<OrderDetailsModel>(p => p.FoodId)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<OrderModel>()
+                .HasOne(u => u.UserModel)
+                .WithMany(o => o.Orders)
+                .HasForeignKey(p => p.BuyerId)
                 .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
